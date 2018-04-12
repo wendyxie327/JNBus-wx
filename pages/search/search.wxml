@@ -1,0 +1,44 @@
+<view class="page__bd">
+
+  <!-- 搜索框-->
+  <view class="weui-search-bar">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+        <input type="number" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="searchInputListener" />
+        <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+          <icon type="clear" size="14"></icon>
+        </view>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+        <icon class="weui-icon-search" type="search" size="14"></icon>
+        <view class="weui-search-bar__text">搜索</view>
+      </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+  </view>
+
+  <!-- 列表页面-->
+  <view hidden='{{!errorContentHide}}'>
+    <block wx:for="{{busList}}" wx:key="busId">
+      <view class='list_item weui-cell' data-line-name='{{item.lineName}}' data-start-station-name='{{item.startStationName}}' data-end-station-name='{{item.endStationName}}' bindtap='showDetailView'>
+        <view class='weui-cell__bd'>{{item.lineName}}</view>
+        <view class='weui-cell__ft'>{{item.startStationName}} - {{item.endStationName}}</view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 错误提示页面 -->
+  <view class=" weui-loadmore weui-loadmore_line" hidden='{{errorContentHide}}'>
+    <view class="error_content weui-loadmore__tips weui-loadmore__tips_in-line">{{errorMessage}}</view>
+  </view>
+
+  <!-- 底部链接-->
+  <view class="weui-footer weui-footer_fixed-bottom">
+    <view class="weui-footer__links">
+      <view url="" class="weui-footer__link" bindtap='clearBusQueryHis'>清空搜索历史</view>
+      <navigator url="" class="weui-footer__link">设置中心</navigator>
+    </view>
+    <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+  </view>
+</view>

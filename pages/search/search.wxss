@@ -1,0 +1,9 @@
+/* pages/search/search.wxss */
+
+.list_item {
+  background-color: white;
+  flex-direction: column;
+  -webkit-box-align: left;
+  -webkit-align-items: left;
+  align-items: left;
+}

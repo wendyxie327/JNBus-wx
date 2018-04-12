@@ -1,0 +1,13 @@
+/**app.wxss**/
+@import '/lib/weui.wxss';
+
+page {
+  background-color: #f8f8f8;
+  height: 100%;
+  font-size: 32rpx;
+  line-height: 1.6;
+}
+
+.error_content {
+  background-color: transparent;
+}

@@ -2,7 +2,7 @@
 @import '/lib/weui.wxss';
 
 page {
-  background-color: #f8f8f8;
+  background-color: white;
   height: 100%;
   font-size: 32rpx;
   line-height: 1.6;

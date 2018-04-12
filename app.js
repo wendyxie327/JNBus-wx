@@ -58,5 +58,9 @@ App({
       },
       success: successFunction
     })
+  },
+
+  requestBusSimple: function (url, successFunction) {
+    return this.requestBus(url, null, successFunction);
   }
 })

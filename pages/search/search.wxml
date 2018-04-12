@@ -21,7 +21,7 @@
   <!-- 列表页面-->
   <view hidden='{{!errorContentHide}}'>
     <block wx:for="{{busList}}" wx:key="busId">
-      <view class='list_item weui-cell' data-line-name='{{item.lineName}}' data-start-station-name='{{item.startStationName}}' data-end-station-name='{{item.endStationName}}' bindtap='showDetailView'>
+      <view class='list_item weui-cell' data-line-name='{{item.lineName}}' data-start-station-name='{{item.startStationName}}' data-end-station-name='{{item.endStationName}}' data-id='{{item.id}}' bindtap='showDetailView'>
         <view class='weui-cell__bd'>{{item.lineName}}</view>
         <view class='weui-cell__ft'>{{item.startStationName}} - {{item.endStationName}}</view>
       </view>

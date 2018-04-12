@@ -46,13 +46,12 @@ Page({
     if (bus != null && bus != "") {
       var url = app.url.queryBusList + '/' + bus + '/0/20';
 
-      app.requestBus(url, null, (res) => {
-        console.log(res);
+      app.requestBusSimple(url, (res) => {  // 用function(res)不行呢
+        console.log(res.data);
         this.setBusListData(res.data.result.result, "换个查询条件试试");
       });
     }
   },
-
 
 
   /**
@@ -73,7 +72,7 @@ Page({
     busQueryHisUtil.save(event.currentTarget.dataset);
 
     wx.navigateTo({
-      url: '../bus_detail/detail'
+      url: '../bus_detail/detail?busId=' + event.currentTarget.dataset.id
     })
   },
 

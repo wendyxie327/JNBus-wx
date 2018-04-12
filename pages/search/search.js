@@ -87,7 +87,7 @@ Page({
    * 清空搜索历史
    */
   clearBusQueryHis: function (event) {
-    busQueryHisUtil.query();
+    busQueryHisUtil.clear();
     this.queryBusListHis();
   },
 

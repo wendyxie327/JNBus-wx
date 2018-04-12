@@ -36,7 +36,6 @@ Page({
    * 显示保存的历史查询数据
    */
   queryBusListHis: function () {
-    console.log("test");
     this.setBusListData(busQueryHisUtil.query(), "请搜索需要查询的车辆");
   },
 
@@ -45,17 +44,12 @@ Page({
    */
   queryBusList: function (bus) {
     if (bus != null && bus != "") {
-      wx.request({
-        url: app.url.queryBusList + '/' + bus + '/0/20',
-        header: {
-          'content-type': 'application/json', // 默认值
-          'version': 'android-insigma.waybook.jinan-2342'
-        },
-        success: (res) => {
-          console.log(res);
-          this.setBusListData(res.data.result.result, "换个查询条件试试");
-        }
-      })
+      var url = app.url.queryBusList + '/' + bus + '/0/20';
+
+      app.requestBus(url, null, (res) => {
+        console.log(res);
+        this.setBusListData(res.data.result.result, "换个查询条件试试");
+      });
     }
   },
 

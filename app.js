@@ -44,5 +44,19 @@ App({
     queryBusCurrentDetail: 'http://60.216.101.229/server-ue2/rest/buses/busline/370100',
     queryBusLine: 'http://60.216.101.229/server-ue2/rest/buslines/370100',
     queryBusLineReverse: 'http://60.216.101.229/server-ue2/rest/buslines/theOtherDirection/370100'
+  },
+
+
+  requestBus: function (url, data, successFunction) {
+    return wx.request({
+      url: url,
+      data: data,
+      method: "GET",
+      header: {
+        'content-type': 'application/json',
+        'version': 'android-insigma.waybook.jinan-2342'
+      },
+      success: successFunction
+    })
   }
 })

@@ -2,6 +2,7 @@
   "pages": [
     "pages/search/search",
     "pages/bus_detail/detail",
+    
     "pages/index/index",
     "pages/logs/logs"
   ],

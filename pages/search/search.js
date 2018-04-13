@@ -60,7 +60,15 @@ Page({
    */
   searchInputListener: function (e) {
     console.log(e.detail.value);
-    this.queryBusList(e.detail.value);
+    this.setData({
+      inputVal: e.detail.value,
+    });
+    if(e.detail.value == null || e.detail.value == ""){
+      this.queryBusListHis();
+    }else{
+      this.queryBusList(e.detail.value);
+    }
+   
   },
 
   /**

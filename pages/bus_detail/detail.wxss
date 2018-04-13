@@ -1,5 +1,9 @@
 /* pages/bus_detail/detail.wxss */
 
+.content{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 .bus_line_name {
   text-align: center;
   font-size: 36rpx;

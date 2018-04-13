@@ -7,9 +7,9 @@
     "pages/logs/logs"
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#000000",
     "navigationBarTitleText": "济南公交查询",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white"
   }
 }

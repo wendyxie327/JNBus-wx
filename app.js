@@ -43,7 +43,7 @@ App({
     queryBusList: 'http://60.216.101.229/server-ue2/rest/buslines/simple/370100',
     queryBusCurrentDetail: 'http://60.216.101.229/server-ue2/rest/buses/busline/370100',
     queryBusStations: 'http://60.216.101.229/server-ue2/rest/buslines/370100',
-    queryBusStationsReverse: 'http://60.216.101.229/server-ue2/rest/buslines/theOtherDirection/370100'
+    queryBusStationsReverse: 'http://60.216.101.229/server-ue2/rest/buslines/theOtherDirection/370100',
   },
 
 

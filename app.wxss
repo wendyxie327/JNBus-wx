@@ -7,7 +7,3 @@ page {
   font-size: 32rpx;
   line-height: 1.6;
 }
-
-.error_content {
-  background-color: transparent;
-}

@@ -30,7 +30,7 @@
 
   <!-- 错误提示页面 -->
   <view class=" weui-loadmore weui-loadmore_line" hidden='{{errorContentHide}}'>
-    <view class="error_content weui-loadmore__tips weui-loadmore__tips_in-line">{{errorMessage}}</view>
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">{{errorMessage}}</view>
   </view>
 
   <!-- 底部链接-->

@@ -13,6 +13,9 @@ Page({
     busCurrentDetails: ""  // 当前正在路上行驶的车辆
   },
 
+  /**
+   * 查询站点列表
+   */
   queryBusStations: function (busId) {
     var url = app.url.queryBusStations + '/' + busId;
     app.requestBusSimple(url, (res) => {
@@ -25,6 +28,9 @@ Page({
     });
   },
 
+  /**
+   * 查询正在行驶的车辆详情
+   */
   queryBusCurrentDetail: function (busId) {
     var url = app.url.queryBusCurrentDetail + '/' + busId;
     app.requestBusSimple(url, (res) => {
@@ -44,7 +50,7 @@ Page({
     if (this.data.stations == "" || this.data.busCurrentDetails == "") {
       return;
     }
-    var context = wx.createCanvasContext('firstCanvas');
+    var context = wx.createCanvasContext('busContent');
     var greenColor = "#09bb07";
     var yellowColor = "#ffc107";
     var redColor = "#ff5722";
@@ -55,7 +61,7 @@ Page({
     var lineY = 10;
     var lineMarginHeight = 10;
     var textHeight = 15;
-   
+
     context.moveTo(lineX, lineY);
     // this.data.busCurrentDetails.push(this.data.busCurrentDetails[0]);
     for (var index = 0; index < this.data.stations.length; index++) {
@@ -70,16 +76,15 @@ Page({
 
       var num = 0;
       for (var i = 0; i < this.data.busCurrentDetails.length; i++) {
-      
+
         if (this.data.busCurrentDetails[i].stationSeqNum == this.data.stations[index].id) {
           this.data.busCurrentDetails.
-          isHaveCurrentBus = true;
+            isHaveCurrentBus = true;
           context.setFontSize(14);
           context.fillText(this.data.busCurrentDetails[i].busId, 10 + textX + num * busNameWidth, lineY + lineMarginHeight + 2 * textHeight);
 
           // 到达下划线标记
           var arrivedLineX = 10 + textX + num * busNameWidth;
-          console.log("arrivedLineX= " + arrivedLineX);
           var arrivedLineY = lineY + lineMarginHeight + 2 * textHeight + 2;
           context.beginPath();
           context.setLineWidth(2);
@@ -125,7 +130,7 @@ Page({
 
     }
     this.setData({
-      maxLineY: lineY
+      maxLineY: lineY + 10
     });
 
     context.draw();

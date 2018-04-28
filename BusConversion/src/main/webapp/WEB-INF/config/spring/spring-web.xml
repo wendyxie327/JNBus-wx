@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+   	xmlns:task="http://www.springframework.org/schema/task" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+
+
+	<!--配置springmvc -->
+	<!--1. 开启springMVC注解模式 -->
+	<!-- 简化配置: 
+		(1)自动注册DefaultAnnotationHandlerMapping,AnnotationMothHandlerAdapter 
+		(2)提供一系列数据绑定、数字和日期的format,@NumberFormat,@DateTimeFormat,json、xml默认读写支持 -->
+	<mvc:annotation-driven />
+
+	<!-- 2.静态资源配置 (1)加入对静态资源的支持:js、png、gif。。。 (2)允许使用/作为整体映射 -->
+	<mvc:default-servlet-handler />
+
+	<!--3.配置jsp 显示ViewResolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/page/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="2"/>
+	</bean>
+
+
+	<!-- 定义，根据bean的名称查找视图 -->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<!-- 查找顺序 -->
+		<property name="order" value="1" />
+	</bean>
+
+	<!-- 4.扫描web相关的bean -->
+	<context:component-scan base-package="com.wendy.**.controller" />
+
+	<!-- 配置文件上传 配置MultipartResolver 用于文件上传 使用spring的CommosMultipartResolver -->
+	<!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+		<!--<property name="defaultEncoding" value="UTF-8" />-->
+		<!--<property name="maxUploadSize" value="104857600" />-->
+		<!--<property name="maxInMemorySize" value="4096" />-->
+		<!--&lt;!&ndash; <property name="p:uploadTempDir" value="fileUpload/temp" /> &ndash;&gt;-->
+	<!--</bean>-->
+
+	<!-- 开启定时器 -->
+	<task:annotation-driven />
+
+</beans>

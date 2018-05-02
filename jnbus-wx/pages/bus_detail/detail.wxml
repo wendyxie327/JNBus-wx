@@ -2,8 +2,23 @@
 <view class='page__bd content'>
   <view class='bus_line_name'>
     {{busLine.lineName}}    {{busLine.startStationName}} - {{busLine.endStationName}}
+
+     <image class='reverse_img' src='/img/reverse.png' bindtap="searchReverse"></image>
+     
   </view>
 
+  <view class=' update_view weui-flex'>
+    <view>{{lastIntervalTime}}秒</view>
+    <view class='weui-msg__link refresh_view' bindtap='refreshView'>刷新</view>
+  </view>
+
+ 
   <canvas style="width: 100%; height: {{maxLineY}}px;" canvas-id="busContent"></canvas>
 
+  <view class='bus_other_content'>
+    <view class='bus_other_content_title'>出发时间</view>
+    <view>{{busLine.operationTime}}</view>
+    <view class='bus_other_content_title'>票价</view> 
+    <view>{{busLine.ticketPrice}}</view> 
+  </view>
 </view>

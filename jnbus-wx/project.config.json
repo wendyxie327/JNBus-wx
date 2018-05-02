@@ -9,7 +9,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.9.94",
-	"appid": "wxaf63e7d41a7d954a",
+	"appid": "touristappid",
 	"projectname": "jnbus-wx",
 	"condition": {
 		"search": {

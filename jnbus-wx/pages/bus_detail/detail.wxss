@@ -8,3 +8,32 @@
   text-align: center;
   font-size: 36rpx;
 }
+
+
+.bus_other_content {
+  margin-top: 16px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 16px;
+  font-size: 28rpx;
+}
+
+.bus_other_content_title{
+  font-weight: bold
+}
+
+.reverse_img{
+  width: 24px;
+  height: 24px;
+  margin-left: 16px;
+  vertical-align: middle
+}
+
+.update_view{
+  text-align: center;
+  justify-content: center
+}
+
+.refresh_view{
+  margin-left: 10px
+}

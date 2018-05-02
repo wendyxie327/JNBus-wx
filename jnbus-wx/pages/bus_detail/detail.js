@@ -1,5 +1,22 @@
 // pages/bus_detail/detail.js
 var app = getApp();
+// 添加刷新功能
+// var interval = setInterval(function () {
+//   console.log("lastIntervalTime = " + this.data.lastIntervalTime);
+//   var lastIntervalTime = this.data.lastIntervalTime;
+
+//   if (lastIntervalTime > 0) {
+//     this.setData({
+//       lastIntervalTime: lastIntervalTime - 1
+//     });
+//   } else {
+//     this.setData({
+//       lastIntervalTime: maxIntervalTime
+//     });
+//     this.refreshView();
+//   }
+
+// }, 1000);
 
 Page({
 
@@ -7,10 +24,34 @@ Page({
    * 页面的初始数据
    */
   data: {
+    busId: "",  // 路程编号
     busLine: "",  // 线路详情
     stations: "", // 线路中站点列表
     maxLineY: 100,
-    busCurrentDetails: ""  // 当前正在路上行驶的车辆
+    busCurrentDetails: "",  // 当前正在路上行驶的车辆
+    maxIntervalTime: 5, // 刷新间隔时间，单位秒
+    lastIntervalTime: 5, // 剩余刷新时间，单位秒
+   
+  },
+
+  intervalFunc: function(){
+    console.log("lastIntervalTime = " + this.data.lastIntervalTime);
+    var lastIntervalTime = this.data.lastIntervalTime;
+
+    if (lastIntervalTime > 0) {
+      this.setData({
+        lastIntervalTime: lastIntervalTime - 1
+      });
+    } else {
+      this.setData({
+        lastIntervalTime: maxIntervalTime
+      });
+      this.refreshView();
+    }
+  },
+ 
+  beginInterval: function(){
+    window.setInterval(this.beginInterval(), 1000);
   },
 
   /**
@@ -42,6 +83,48 @@ Page({
     });
   },
 
+  /**
+   * 查询站点列表 - 反方向
+   * 
+   * 查询反方向站点列表，并获取到反方向站点名称；再查询相应的正在行驶的车辆名单
+   */
+  queryBusStationsReverse: function (busId) {
+    var url = app.url.queryBusStationsReverse + '/' + busId;
+    app.requestBusSimple(url, (res) => {
+      console.log(res.data);
+      this.setData({
+        busLine: res.data.result,
+        stations: res.data.result.stations, // 各站点列表
+        busId: res.data.result.id,
+      });
+      // 查询正在行驶的车辆信息
+      this.queryBusCurrentDetail(res.data.result.id);
+    });
+  },
+
+
+/**
+ * 查询车辆反方向
+ */
+  searchReverse: function(){
+    this.setData({
+      busLine: "",
+      stations: "", // 各站点列表
+      busCurrentDetails: ""
+    });
+
+    this.queryBusStationsReverse(this.data.busId);
+  },
+
+
+  /**
+   * 刷新当前页面
+   */
+  refreshView: function(){
+    this.queryBusStations(this.data.busId);
+    this.queryBusCurrentDetail(this.data.busId);
+  },
+
 
   /**
    * 绘制线路和车辆
@@ -52,6 +135,7 @@ Page({
     }
     var context = wx.createCanvasContext('busContent');
     var greenColor = "#09bb07";
+    var lightGreenColor = "#90EE90";
     var yellowColor = "#ffc107";
     var redColor = "#ff5722";
     var arrivedColor = "rgba(63, 81, 181, 1)";
@@ -68,7 +152,7 @@ Page({
       var textX = 20;
       // 站点名称显示
       context.setFontSize(14);
-      context.fillText(index + " " + this.data.stations[index].stationName, textX, lineY + lineMarginHeight + textHeight);
+      context.fillText((index+1) + " " + this.data.stations[index].stationName, textX, lineY + lineMarginHeight + textHeight);
 
       // 车辆信息显示
       var isHaveCurrentBus = false;
@@ -115,7 +199,7 @@ Page({
       if (index % 2 == 0) {
         context.setStrokeStyle(greenColor);
       } else {
-        context.setStrokeStyle(yellowColor);
+        context.setStrokeStyle(lightGreenColor);
       }
       context.setLineWidth(5);
       context.moveTo(lineX, lineY);
@@ -135,6 +219,7 @@ Page({
 
     context.draw();
   },
+  
 
   /**
    * 生命周期函数--监听页面加载
@@ -143,13 +228,18 @@ Page({
     // this.queryBusLine(options.busId); // 获取从上个页面传来的值
     this.queryBusStations(options.busId);
     this.queryBusCurrentDetail(options.busId);
+    this.setData({
+      busId : options.busId
+    });
+
+    this.beginInterval();
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+   
   },
 
   /**
@@ -163,7 +253,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    clearInterval(interval);
   },
 
   /**
@@ -193,4 +283,4 @@ Page({
   onShareAppMessage: function () {
 
   }
-})
+});

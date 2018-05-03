@@ -1,22 +1,5 @@
 // pages/bus_detail/detail.js
 var app = getApp();
-// 添加刷新功能
-// var interval = setInterval(function () {
-//   console.log("lastIntervalTime = " + this.data.lastIntervalTime);
-//   var lastIntervalTime = this.data.lastIntervalTime;
-
-//   if (lastIntervalTime > 0) {
-//     this.setData({
-//       lastIntervalTime: lastIntervalTime - 1
-//     });
-//   } else {
-//     this.setData({
-//       lastIntervalTime: maxIntervalTime
-//     });
-//     this.refreshView();
-//   }
-
-// }, 1000);
 
 Page({
 
@@ -29,29 +12,61 @@ Page({
     stations: "", // 线路中站点列表
     maxLineY: 100,
     busCurrentDetails: "",  // 当前正在路上行驶的车辆
-    maxIntervalTime: 5, // 刷新间隔时间，单位秒
-    lastIntervalTime: 5, // 剩余刷新时间，单位秒
-   
+    maxIntervalTime: 20, // 刷新间隔时间，单位秒
+    lastIntervalTime: 20, // 剩余刷新时间，单位秒
+    intervalId: 0, // 定时器ID 
   },
 
-  intervalFunc: function(){
-    console.log("lastIntervalTime = " + this.data.lastIntervalTime);
-    var lastIntervalTime = this.data.lastIntervalTime;
+  /**
+   * 刷新当前页面
+   */
+  refreshView: function () {
+    this.setData({
+      lastIntervalTime: this.data.maxIntervalTime
+    });
+    this.queryBusStations(this.data.busId);
+    this.queryBusCurrentDetail(this.data.busId);
+  },
 
+  /**
+   * 查询车辆反方向
+   */
+  searchReverse: function () {
+    this.setData({
+      busLine: "",
+      stations: "", // 各站点列表
+      busCurrentDetails: "",
+      lastIntervalTime: this.data.maxIntervalTime
+    });
+
+    this.queryBusStationsReverse(this.data.busId);
+  },
+
+  /**
+   * 定时器执行的内部方法
+   */
+  intervalFunc: function () {
+    var lastIntervalTime = this.data.lastIntervalTime;
     if (lastIntervalTime > 0) {
       this.setData({
         lastIntervalTime: lastIntervalTime - 1
       });
     } else {
       this.setData({
-        lastIntervalTime: maxIntervalTime
+        lastIntervalTime: this.data.maxIntervalTime
       });
       this.refreshView();
     }
   },
- 
-  beginInterval: function(){
-    window.setInterval(this.beginInterval(), 1000);
+
+  /**
+   * 开始执行定时器
+   */
+  beginInterval: function () {
+    var id = setInterval(this.intervalFunc, 1000);
+    this.setData({
+      intervalId: id
+    });
   },
 
   /**
@@ -102,30 +117,6 @@ Page({
     });
   },
 
-
-/**
- * 查询车辆反方向
- */
-  searchReverse: function(){
-    this.setData({
-      busLine: "",
-      stations: "", // 各站点列表
-      busCurrentDetails: ""
-    });
-
-    this.queryBusStationsReverse(this.data.busId);
-  },
-
-
-  /**
-   * 刷新当前页面
-   */
-  refreshView: function(){
-    this.queryBusStations(this.data.busId);
-    this.queryBusCurrentDetail(this.data.busId);
-  },
-
-
   /**
    * 绘制线路和车辆
    */
@@ -152,7 +143,7 @@ Page({
       var textX = 20;
       // 站点名称显示
       context.setFontSize(14);
-      context.fillText((index+1) + " " + this.data.stations[index].stationName, textX, lineY + lineMarginHeight + textHeight);
+      context.fillText((index + 1) + " " + this.data.stations[index].stationName, textX, lineY + lineMarginHeight + textHeight);
 
       // 车辆信息显示
       var isHaveCurrentBus = false;
@@ -219,27 +210,28 @@ Page({
 
     context.draw();
   },
-  
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // this.queryBusLine(options.busId); // 获取从上个页面传来的值
-    this.queryBusStations(options.busId);
-    this.queryBusCurrentDetail(options.busId);
+    // 获取从上个页面传来的值
     this.setData({
-      busId : options.busId
+      busId: options.busId
     });
+    this.refreshView();
 
+    // 添加刷新功能
     this.beginInterval();
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-   
+
   },
 
   /**
@@ -253,14 +245,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    clearInterval(interval);
+   
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    clearInterval(this.data.intervalId);
   },
 
   /**
@@ -284,3 +276,4 @@ Page({
 
   }
 });
+

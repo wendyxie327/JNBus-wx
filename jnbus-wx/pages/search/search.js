@@ -47,8 +47,11 @@ Page({
       var url = app.url.queryBusList + '/' + bus + '/0/20';
 
       app.requestBusSimple(url, (res) => {  // 用function(res)不行呢
-        console.log(res.data);
-        this.setBusListData(res.data.result.result, "换个查询条件试试");
+        if (res.statusCode == 200){
+          this.setBusListData(res.data.result.result, "换个查询条件试试");
+        }else{
+          this.setBusListData(null, "网络异常");
+        }
       });
     }
   },

@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    errorMessage: "暂无数据",
+    errorContentHide: false,
     busId: "",  // 路程编号
     busLine: "",  // 线路详情
     stations: "", // 线路中站点列表
@@ -76,11 +78,34 @@ Page({
     var url = app.url.queryBusStations + '/' + busId;
     app.requestBusSimple(url, (res) => {
       console.log(res.data);
-      this.setData({
-        busLine: res.data.result,
-        stations: res.data.result.stations, // 各站点列表
-      });
-      this.drawBusStations();
+      if (res.statusCode == 200){
+        this.setData({
+          busLine: res.data.result,
+          stations: res.data.result.stations, // 各站点列表
+        });
+        this.setErrorContentHide();
+        this.drawBusStations();
+
+      }else{
+         // 网络异常情况
+        this.setErrorContentUnHide("网络异常");
+      }
+     
+    });
+  },
+
+// 错误提示隐藏，此时数据正常
+  setErrorContentHide(){
+    this.setData({
+      errorContentHide: true,
+    });
+  },
+
+  // 显示错误提示
+  setErrorContentUnHide(errMsg) {
+    this.setData({
+      errorContentHide: false,
+      errorMessage: errMsg,
     });
   },
 
@@ -90,11 +115,17 @@ Page({
   queryBusCurrentDetail: function (busId) {
     var url = app.url.queryBusCurrentDetail + '/' + busId;
     app.requestBusSimple(url, (res) => {
-      console.log(res.data);
-      this.setData({
-        busCurrentDetails: res.data.result
-      });
-      this.drawBusStations();
+      if(res.statusCode == 200){
+        this.setData({
+          busCurrentDetails: res.data.result
+        });
+        
+        this.drawBusStations();
+        
+      }else{
+        this.setErrorContentUnHide("网络异常");
+      }
+     
     });
   },
 
@@ -106,14 +137,20 @@ Page({
   queryBusStationsReverse: function (busId) {
     var url = app.url.queryBusStationsReverse + '/' + busId;
     app.requestBusSimple(url, (res) => {
-      console.log(res.data);
-      this.setData({
-        busLine: res.data.result,
-        stations: res.data.result.stations, // 各站点列表
-        busId: res.data.result.id,
-      });
-      // 查询正在行驶的车辆信息
-      this.queryBusCurrentDetail(res.data.result.id);
+      if (res.statusCode == 200) {
+        this.setData({
+          busLine: res.data.result,
+          stations: res.data.result.stations, // 各站点列表
+          busId: res.data.result.id,
+        });
+        this.setErrorContentHide();
+        // 查询正在行驶的车辆信息
+        this.queryBusCurrentDetail(res.data.result.id);
+
+      }else{
+        this.setErrorContentUnHide("网络异常");
+      }
+
     });
   },
 

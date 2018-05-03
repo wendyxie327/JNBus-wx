@@ -1,24 +1,34 @@
 <!--pages/bus_detail/detail.wxml-->
-<view class='page__bd content'>
+<view class='page__bd content' hidden='{{!errorContentHide}}'>
   <view class='bus_line_name'>
-    {{busLine.lineName}}    {{busLine.startStationName}} - {{busLine.endStationName}}
+    {{busLine.lineName}} {{busLine.startStationName}} - {{busLine.endStationName}}
 
-     <image class='reverse_img' src='/img/reverse.png' bindtap="searchReverse"></image>
-     
+    <image class='reverse_img' src='/img/reverse.png' bindtap="searchReverse"></image>
+
   </view>
 
+  <!--  刷新按钮 -->
   <view class=' update_view weui-flex'>
     <view>{{lastIntervalTime}}秒</view>
     <view class='weui-msg__link refresh_view' bindtap='refreshView'>刷新</view>
   </view>
 
- 
+  <!-- 绘制 路线详情-->
   <canvas style="width: 100%; height: {{maxLineY}}px;" canvas-id="busContent"></canvas>
 
+  <!--  出发时间等路线基本信息 -->
   <view class='bus_other_content'>
     <view class='bus_other_content_title'>出发时间</view>
     <view>{{busLine.operationTime}}</view>
-    <view class='bus_other_content_title'>票价</view> 
-    <view>{{busLine.ticketPrice}}</view> 
+    <view class='bus_other_content_title'>票价</view>
+    <view>{{busLine.ticketPrice}}</view>
   </view>
+
+
+</view>
+
+
+<!-- 错误提示页面 -->
+<view class=" weui-loadmore weui-loadmore_line" hidden='{{errorContentHide}}'>
+  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">{{errorMessage}}</view>
 </view>

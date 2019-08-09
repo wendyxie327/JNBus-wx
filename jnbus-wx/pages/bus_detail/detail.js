@@ -77,7 +77,6 @@ Page({
   queryBusStations: function (busId) {
     var url = app.url.queryBusStations + '/' + busId;
     app.requestBusSimple(url, (res) => {
-      console.log(res.data);
       if (res.statusCode == 200){
         this.setData({
           busLine: res.data.result,

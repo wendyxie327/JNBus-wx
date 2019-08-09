@@ -37,8 +37,8 @@
   <view class="weui-footer weui-footer_fixed-bottom">
     <view class="weui-footer__links">
       <view url="" class="weui-footer__link" bindtap='clearBusQueryHis'>清空搜索历史</view>
-      <navigator url="" class="weui-footer__link">设置中心</navigator>
+      <!-- <navigator url="" class="weui-footer__link">设置中心</navigator> -->
     </view>
-    <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+    <!-- <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view> -->
   </view>
 </view>

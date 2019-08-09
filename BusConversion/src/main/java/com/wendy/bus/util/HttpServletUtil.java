@@ -84,7 +84,7 @@ public class HttpServletUtil {
         CloseableHttpResponse httpResponse = httpclient.execute(request);
         if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
             //取得返回的字符串
-            strResult = EntityUtils.toString(httpResponse.getEntity(), "GBK");
+            strResult = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
         }
         return strResult;
     }

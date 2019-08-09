@@ -16,7 +16,7 @@ public class ConversionController {
     @RequestMapping(value = "/queryBusList/{bus}/0/20", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String queryBusList(@PathVariable("bus") String bus) {
-        String url = "http://60.216.101.229/server-ue2/rest/buslines/simple/370100";
+        String url = "http://iwaybook.369cx.cn/server-ue2/rest/buslines/simple/370100";
         url = url + "/" + bus + "/0/20";
         String result = null;
         try {
@@ -33,7 +33,7 @@ public class ConversionController {
     @RequestMapping(value = "/queryBusCurrentDetail/{busId}", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String queryBusCurrentDetail(@PathVariable("busId") String busId) {
-        String url = "http://60.216.101.229/server-ue2/rest/buses/busline/370100";
+        String url = "http://iwaybook.369cx.cn/server-ue2/rest/buses/busline/370100";
         url = url + "/" + busId ;
         String result = null;
         try {
@@ -48,7 +48,7 @@ public class ConversionController {
     @RequestMapping(value = "/queryBusStations/{busId}", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String queryBusStations(@PathVariable("busId") String busId) {
-        String url = "http://60.216.101.229/server-ue2/rest/buslines/370100";
+        String url = "http://iwaybook.369cx.cn/server-ue2/rest/buslines/370100";
         url = url + "/" + busId ;
         String result = null;
         try {
@@ -64,7 +64,7 @@ public class ConversionController {
     @RequestMapping(value = "/queryBusStationsReverse/{busId}", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String queryBusStationsReverse(@PathVariable("busId") String busId) {
-        String url = "http://60.216.101.229/server-ue2/rest/buslines/theOtherDirection/370100";
+        String url = "http://iwaybook.369cx.cn/server-ue2/rest/buslines/theOtherDirection/370100";
         url = url + "/" + busId ;
         String result = null;
         try {

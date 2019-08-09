@@ -10,5 +10,6 @@
     "navigationBarBackgroundColor": "#000000",
     "navigationBarTitleText": "济南公交查询",
     "navigationBarTextStyle": "white"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
